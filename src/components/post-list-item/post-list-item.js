@@ -1,4 +1,4 @@
-import "./post-list-item.css"
+import "./post-list-item.sass"
 import {Component} from "react"
 
 export default class PostListItem extends Component {
