@@ -20,9 +20,9 @@ const AppBlock = styled.div`
 class App extends Component {
   state = {
     data : [
-      {label: 'Going to learn React', important: false, like: false, id: Date.now()},
-      {label: 'Waiting for something...', important: false, like: false, id: Date.now()},
-      {label: 'Great summer, really nice', important: false, like: false, id: Date.now()}
+      {label: 'Going to learn React', important: false, like: false, id: 'asd'},
+      {label: 'Waiting for something...', important: false, like: false, id: 'asb'},
+      {label: 'Great summer, really nice', important: false, like: false, id: 'asg'}
     ],
     searchText: '',
     filter: 'all'
