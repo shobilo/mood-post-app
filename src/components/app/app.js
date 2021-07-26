@@ -20,11 +20,12 @@ const AppBlock = styled.div`
 class App extends Component {
   state = {
     data : [
-      {label: 'Going to learn React', important: false, like: false, id: 'dsadsa'},
-      {label: 'Waiting for something...', important: false, like: false, id: 'saijf'},
-      {label: 'Great summer, really nice', important: false, like: false, id: 'saidnk'}
+      {label: 'Going to learn React', important: false, like: false, id: Date.now()},
+      {label: 'Waiting for something...', important: false, like: false, id: Date.now()},
+      {label: 'Great summer, really nice', important: false, like: false, id: Date.now()}
     ],
-    searchText: ''
+    searchText: '',
+    filter: 'all'
   }
 
   addNote = (text) => {
@@ -72,6 +73,10 @@ class App extends Component {
     })
   }
 
+  onFilterSelect = (filter) => {
+    this.setState({filter})
+  }
+
   changePropertyFlagItem = (data, id, property) => {
     const index = data.findIndex(element => element.id === id)
 
@@ -88,11 +93,20 @@ class App extends Component {
     return newArray
   }
 
+  filterPost = (items, filter) => {
+    switch (filter) {
+      case 'like': return items.filter(item => item.like)
+      case 'important': return items.filter(item => item.important)
+      case 'all' : return items
+      default : return new Error('Invalid filter')
+    }
+  }
+
   searchPost = (items, searchText) => {
     if (searchText.length === 0) return items
 
     return items.filter(item => {
-      return item.label.indexOf(searchText) > -1
+      return item.label.toLowerCase().indexOf(searchText.toLowerCase()) > -1
     })
   }
 
@@ -101,10 +115,10 @@ class App extends Component {
   }
 
   render() {
-    const {data, searchText} = this.state
+    const {data, searchText, filter} = this.state
     const likedNotesCounter = data.filter(item => item.like).length
     const allPostsNumber = data.length
-    const visiblePosts = this.searchPost(data, searchText)
+    const visiblePosts = this.filterPost(this.searchPost(data, searchText), filter)
 
     return (
     <AppBlock>
@@ -116,7 +130,10 @@ class App extends Component {
         <SearchPanel
           onUpdateSearch={this.onUpdateSearch}
         />
-        <PostStatusFilter/>
+        <PostStatusFilter
+          filter={filter}
+          onFilterSelect={this.onFilterSelect}
+        />
       </div>
       <PostList 
         posts={visiblePosts}

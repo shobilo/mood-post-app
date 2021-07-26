@@ -1,4 +1,3 @@
-import "./app-header.css"
 import styled from "styled-components"
 
 const Header = styled.div`

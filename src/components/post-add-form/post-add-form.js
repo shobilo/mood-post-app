@@ -16,6 +16,12 @@ class PostAddForm extends Component {
 
   onSubmit = (event) => {
     event.preventDefault()
+    const text = this.state.text
+    
+    if (text.length === 0) {
+      alert('Please enter a non-empty text')
+      return
+    }
 
     this.props.onAdd(this.state.text)
     this.setState({
