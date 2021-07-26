@@ -23,7 +23,8 @@ class App extends Component {
       {label: 'Going to learn React', important: false, like: false, id: 'dsadsa'},
       {label: 'Waiting for something...', important: false, like: false, id: 'saijf'},
       {label: 'Great summer, really nice', important: false, like: false, id: 'saidnk'}
-    ]
+    ],
+    searchText: ''
   }
 
   addNote = (text) => {
@@ -66,7 +67,7 @@ class App extends Component {
   onToggleLiked = (id) => {
     this.setState(({data}) => {
       return {
-        data: this.changePropertyFlagItem(data, id, 5)
+        data: this.changePropertyFlagItem(data, id, 'like')
       }
     })
   }
@@ -87,10 +88,23 @@ class App extends Component {
     return newArray
   }
 
+  searchPost = (items, searchText) => {
+    if (searchText.length === 0) return items
+
+    return items.filter(item => {
+      return item.label.indexOf(searchText) > -1
+    })
+  }
+
+  onUpdateSearch = (searchText) => {
+    this.setState({searchText})
+  }
+
   render() {
-    const {data} = this.state
+    const {data, searchText} = this.state
     const likedNotesCounter = data.filter(item => item.like).length
     const allPostsNumber = data.length
+    const visiblePosts = this.searchPost(data, searchText)
 
     return (
     <AppBlock>
@@ -99,11 +113,13 @@ class App extends Component {
         allPostsNumber={allPostsNumber}
       />
       <div className="search-panel d-flex">
-        <SearchPanel/>
+        <SearchPanel
+          onUpdateSearch={this.onUpdateSearch}
+        />
         <PostStatusFilter/>
       </div>
       <PostList 
-        posts={this.state.data}
+        posts={visiblePosts}
         onDelete={ this.deleteNote }
         onToggleImportant={ this.onToggleImportant }
         onToggleLiked={ this.onToggleLiked }
