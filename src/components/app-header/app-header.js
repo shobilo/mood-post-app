@@ -17,11 +17,11 @@ const Header = styled.div`
   }
 `
 
-const AppHeader = () => {
+const AppHeader = ({allPostsNumber, likedNotesCounter}) => {
   return (
     <Header as='div'>
       <h1>Basic notes app</h1>
-      <h2>5 notes, 0 favorites</h2>
+      <h2>{allPostsNumber} notes, {likedNotesCounter} favorites</h2>
     </Header>
   )
 }

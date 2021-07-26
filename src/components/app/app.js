@@ -20,9 +20,9 @@ const AppBlock = styled.div`
 class App extends Component {
   state = {
     data : [
-      {label: 'Going to learn React', important: true, id: 'dsadsa'},
-      {label: 'Waiting for something...', important: false, id: 'saijf'},
-      {label: 'Great summer', important: false, id: 'saidnk'}
+      {label: 'Going to learn React', important: false, like: false, id: 'dsadsa'},
+      {label: 'Waiting for something...', important: false, like: false, id: 'saijf'},
+      {label: 'Great summer, really nice', important: false, like: false, id: 'saidnk'}
     ]
   }
 
@@ -43,11 +43,11 @@ class App extends Component {
 
   deleteNote = (id) => {
     this.setState(({data}) => {
-      const index = data.findIndex(elem => elem.id === id);
-      const before = data.slice(0, index)
-      const after = data.slice(index + 1)
+      const index = data.findIndex(elem => elem.id === id)
+      const arrayBefore = data.slice(0, index)
+      const arrayAfter = data.slice(index + 1)
 
-      const newArray = [...before, ...after]
+      const newArray = [...arrayBefore, ...arrayAfter]
 
       return {
         data: newArray
@@ -55,10 +55,49 @@ class App extends Component {
     })
   }
 
+  onToggleImportant = (id) => {
+    this.setState(({data}) => {
+      return {
+        data: this.changePropertyFlagItem(data, id, 'important')
+      }
+    })
+  }
+
+  onToggleLiked = (id) => {
+    this.setState(({data}) => {
+      return {
+        data: this.changePropertyFlagItem(data, id, 5)
+      }
+    })
+  }
+
+  changePropertyFlagItem = (data, id, property) => {
+    const index = data.findIndex(element => element.id === id)
+
+    const oldItem = data[index]
+
+    const newItem = {...oldItem}
+    newItem[property] = !oldItem[property]
+
+    const arrayBeforeNewItem = data.slice(0, index)
+    const arrayAfterNewItem = data.slice(index + 1)
+
+    const newArray = [...arrayBeforeNewItem, newItem, ...arrayAfterNewItem]
+
+    return newArray
+  }
+
   render() {
+    const {data} = this.state
+    const likedNotesCounter = data.filter(item => item.like).length
+    const allPostsNumber = data.length
+
     return (
     <AppBlock>
-      <AppHeader/>
+      <AppHeader
+        likedNotesCounter={likedNotesCounter}
+        allPostsNumber={allPostsNumber}
+      />
       <div className="search-panel d-flex">
         <SearchPanel/>
         <PostStatusFilter/>
@@ -66,6 +105,8 @@ class App extends Component {
       <PostList 
         posts={this.state.data}
         onDelete={ this.deleteNote }
+        onToggleImportant={ this.onToggleImportant }
+        onToggleLiked={ this.onToggleLiked }
       />
       <PostAddForm
         onAdd={this.addNote}

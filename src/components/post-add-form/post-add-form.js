@@ -2,7 +2,7 @@ import "./post-add-form.css"
 
 const PostAddForm = ({onAdd}) => {
   return (
-    <div className="bottom-panel d-flex">
+    <form className="bottom-panel d-flex">
       <input 
         type="text"
         placeholder="Input your note here"
@@ -14,7 +14,7 @@ const PostAddForm = ({onAdd}) => {
               >
         Add note
       </button> 
-    </div>
+    </form>
   )
 }
 

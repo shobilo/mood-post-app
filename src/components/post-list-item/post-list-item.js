@@ -2,27 +2,8 @@ import "./post-list-item.sass"
 import {Component} from "react"
 
 export default class PostListItem extends Component {
-
-  state = {
-    important: false,
-    like: false
-  }
-
-  onImportant = () => {
-    this.setState(state => ({
-      important: !state.important
-    }))
-  }
-
-  onLike = () => {
-    this.setState(state => ({
-      like: !state.like
-    }))
-  }
-
   render() {
-    const {label, onDelete} = this.props
-    const {important, like} = this.state
+    const {label, onDelete, onToggleImportant, onToggleLiked, important, like} = this.props
 
     let classNames = 'app-list-item d-flex justify-content-between'
 
@@ -38,13 +19,13 @@ export default class PostListItem extends Component {
       <div className={classNames}>
         <span 
           className="app-list-item-label"
-          onClick={this.onLike}>
+          onClick={onToggleLiked}>
             {label}
         </span>
         <div className="d-flex justify-content-center align-items-center">
           <button className="btn-star btn-sm" 
                   type="button"
-                  onClick={this.onImportant}>
+                  onClick={onToggleImportant}>
             <i className="fa fa-star"></i>
           </button>
           <button className="btn-trash btn-sm" 
