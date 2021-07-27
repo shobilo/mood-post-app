@@ -1,7 +1,12 @@
 .app-list {
-    margin-top: 50px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  height: 25rem;
+  width: auto;
+  overflow-y: auto;
 }
 .app-list .list-group-item {
   padding: 20px 35px 10px 35px;
-  margin-top: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }

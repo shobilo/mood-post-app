@@ -20,9 +20,11 @@ const PostList = ({posts, onDelete, onToggleImportant, onToggleLiked}) => {
   })
 
   return (
-    <ListGroup className="app-list">
-      {elements}
-    </ListGroup>
+    <div className="app-list">
+      <ListGroup >
+        {elements}
+      </ListGroup>
+    </div>
   )
 }
 

@@ -135,12 +135,15 @@ class App extends Component {
           onFilterSelect={this.onFilterSelect}
         />
       </div>
-      <PostList 
-        posts={visiblePosts}
-        onDelete={ this.deleteNote }
-        onToggleImportant={ this.onToggleImportant }
-        onToggleLiked={ this.onToggleLiked }
-      />
+      <div className="post-list">
+        <PostList 
+          posts={visiblePosts}
+          onDelete={ this.deleteNote }
+          onToggleImportant={ this.onToggleImportant }
+          onToggleLiked={ this.onToggleLiked }
+        />
+      </div>
+
       <PostAddForm
         onAdd={this.addNote}
       />
