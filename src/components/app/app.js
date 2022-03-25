@@ -12,31 +12,29 @@ const AppBlock = styled.div`
   margin: 0 auto;
   max-width: 800px;
 `
-
-// const StyledAppBlock = styled(AppBlock)`
-//   background-color: grey;
-// `
-
 class App extends Component {
   state = {
-    data : [
-      {label: 'Going to learn React', important: false, like: false, id: 'asd'},
-      {label: 'Waiting for something...', important: false, like: false, id: 'asb'},
-      {label: 'Great summer, really nice', important: false, like: false, id: 'asg'}
-    ],
+    data : JSON.parse(localStorage.getItem("store")) || [],
     searchText: '',
     filter: 'all'
+  }
+
+  componentDidUpdate = () => {
+    console.log('dsad')
+    localStorage.setItem("store", JSON.stringify(this.state.data))
   }
 
   addNote = (text) => {
     const newNote = {
       label: text,
       important: false,
+      like: false,
       id: Date.now()
     }
 
     this.setState(({data}) => {
       const newArray = [...data, newNote]
+
       return {
         data: newArray
       }
